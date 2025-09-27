@@ -10,11 +10,11 @@ import Foundation
 extension TimeInterval {
     
     static var `default`: TimeInterval {
-        1.0
+        4.0
     }
 
     static var slower: TimeInterval {
-        5.0
+        2.0
     }
 
     static var loading: TimeInterval {
