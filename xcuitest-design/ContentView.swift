@@ -9,45 +9,55 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            
-            Text("Hello, world!")
-            
-            Button(action: {
-                 print("Button was tapped!")
-             }) {
-                 Text("Tap Me")
-                     .fontWeight(.bold)
-                     .padding()
-                     .frame(width: 200)
-                     .background(Color.blue)
-                     .foregroundColor(.white)
-                     .cornerRadius(10)
-             }
-            
-            Spacer()
-            NavigationStack {
+        NavigationStack {
+            VStack {
+                Image(systemName: "globe")
+                    .imageScale(.large)
+                    .foregroundStyle(.tint)
+
+                Text("Hello world")
+
+                Button(action: {
+                    print("Button was tapped!")
+                }) {
+                    Text("Tap Me")
+                        .fontWeight(.bold)
+                        .padding()
+                        .frame(width: 200)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+
+                Spacer()
+
                 HStack {
                     Text("Navigation")
                         .padding()
-                    
-                    NavigationLink(destination: ContentUpdateView()) {
-                        Text("Go to Second View")
+
+                    NavigationLink(destination: IncrementView()) {
+                        Text("Increment View")
                             .fontWeight(.bold)
-                            .padding()
-                            .frame(maxWidth: .infinity)
+                            .frame(maxWidth: .infinity, minHeight: 50)
                             .background(Color.blue)
                             .foregroundColor(.white)
                             .cornerRadius(10)
-                            .padding(.horizontal)
+                            .padding(.horizontal, 4)
+                    }
+
+                    NavigationLink(destination: FetchJsonView()) {
+                        Text("Fetch View")
+                            .fontWeight(.bold)
+                            .frame(maxWidth: .infinity, minHeight: 50)
+                            .background(Color.green)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .padding(.horizontal, 4)
                     }
                 }
-                .navigationTitle("First View")
             }
             .padding()
+            .navigationTitle("First View")
         }
     }
 }

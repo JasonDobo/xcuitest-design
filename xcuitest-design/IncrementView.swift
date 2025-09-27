@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentUpdateView: View {
+struct IncrementView: View {
     @State private var number: Int = 0
 
     var body: some View {
@@ -51,6 +51,6 @@ struct ContentUpdateView: View {
 }
 
 #Preview {
-    ContentUpdateView()
+    IncrementView()
 }
 

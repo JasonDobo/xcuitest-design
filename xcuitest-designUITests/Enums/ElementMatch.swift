@@ -13,7 +13,7 @@ enum ElementMatch {
     case endswith(String)
     case regex(String)
     
-    func myPredicate(forkeyPatch keyPath: String = "Zabel") -> NSPredicate {
+    func myPredicate(forkeyPatch keyPath: String = "label") -> NSPredicate {
         switch self {
         case .contain(let label):
             return NSPredicate(format: "\(keyPath) CONTAINS[c] %@", label)
