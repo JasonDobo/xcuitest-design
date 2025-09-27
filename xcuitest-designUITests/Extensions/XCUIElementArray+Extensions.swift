@@ -19,19 +19,21 @@ extension Array where Element: XCUIElement {
         - `timeout`: time to wait for state to match
      - Returns: `true` if all elements successfully reach the `state` within the timeout else return `false`
      */
+
     @discardableResult
     func waitForAllElements(with state: ElementState, timeout: TimeInterval = .loading) -> Bool {
         guard !self.isEmpty else {
             return false
         }
-                
-        let predicate = NSPredicate(format: state.rawValue)
-        let expectations: [XCTNSPredicateExpectation] = self.map { element in
-            return XCTNSPredicateExpectation(predicate: predicate, object: element)
+        
+        let myPredicate = NSPredicate (format: state.rawValue)
+        var allExpectations: [XCTNSPredicateExpectation]!
+        allExpectations = self.map { element -> XCTNSPredicateExpectation in
+            return XCTNSPredicateExpectation (predicate: myPredicate, object: element)
         }
         
-        let result = XCTWaiter().wait(for: expectations, timeout: timeout, enforceOrder: false)
-        return result == .completed
+        let result = XCTWaiter().wait(for: allExpectations, timeout: timeout, enforceOrder: false)
+        return result == XCTWaiter.Result.completed
     }
     
     /**
@@ -49,32 +51,32 @@ extension Array where Element: XCUIElement {
             return nil
         }
         
-        let predicate = NSPredicate(format: state.rawValue)
-        var expectations: [XCTNSPredicateExpectation]!
+        let myPredicate = NSPredicate(format: state.rawValue)
+        var allExpectations: [XCTNSPredicateExpectation]!
         var matchedElement: XCUIElement?
         
-        expectations = self.map { element in
-            let expectation = XCTNSPredicateExpectation(predicate: predicate, object: element)
-            
-            expectation.handler = {
-                if matchedElement == nil {
-                    matchedElement = element
-                    
-                    for otherElement in self where otherElement != element {
-                        expectations.forEach { $0.fulfill() }
-                    }
+        allExpectations = self.map { element -> XCTNSPredicateExpectation in
+            let myHandler: () -> Bool = {
+                if matchedElement != nil {
+                    return true
                 }
                 
+                matchedElement = element
+                allExpectations.forEach { $0.fulfill() }
                 return true
             }
-            return expectation
+            
+            let myXCTNSPredicateExpectation = XCTNSPredicateExpectation(predicate: myPredicate, object: element)
+            myXCTNSPredicateExpectation.handler = myHandler
+            
+            return myXCTNSPredicateExpectation
         }
         
-        XCTWaiter().wait(for: expectations, timeout: timeout, enforceOrder: false)
-        if let element = matchedElement {
-            handler?(element)
+        XCTWaiter().wait(for: allExpectations, timeout: timeout)
+        if let matchedElement = matchedElement {
+            handler?(matchedElement)
         }
-
+        
         return matchedElement
     }
 }

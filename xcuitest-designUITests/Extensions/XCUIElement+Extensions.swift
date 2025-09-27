@@ -8,6 +8,8 @@
 import Foundation
 import XCTest
 
+// MARK: - XCUIElement Extension
+
 @MainActor
 extension XCUIElement {
     
