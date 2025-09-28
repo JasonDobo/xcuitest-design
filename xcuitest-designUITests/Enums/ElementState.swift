@@ -18,4 +18,8 @@ enum ElementState: String {
     case notSelected = "selected == false"
     case keyboardFocus = "hasKeyboardFocus == true"
     case notKeyboardFocus = "hasKeyboardFocus == false"
+    
+    func myPredicate() -> NSPredicate {
+        return NSPredicate(format: self.rawValue)
+    }
 }
