@@ -27,8 +27,10 @@ struct FetchJsonView: View {
                 } else if let todo {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("User ID: \(todo.userId)")
+                            .accessibilityIdentifier(Idenitifiers.FetchView.id.rawValue)
                         Text("ID: \(todo.id)")
                         Text("Title: \(todo.title)")
+                            .accessibilityIdentifier(Idenitifiers.FetchView.title.rawValue)
                         Text("Completed: \(todo.completed ? "Yes" : "No")")
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -47,6 +49,7 @@ struct FetchJsonView: View {
                 Label("Reload", systemImage: "arrow.clockwise")
             }
             .buttonStyle(.borderedProminent)
+            .accessibilityIdentifier(Idenitifiers.FetchView.reload.rawValue)
         }
         .padding()
         .navigationTitle("Sample Fetch")

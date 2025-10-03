@@ -12,12 +12,13 @@ struct IncrementView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            TextField("Enter number", value: $number, formatter: NumberFormatter())
+            TextField("Result", value: $number, formatter: NumberFormatter())
                 .keyboardType(.numberPad)
                 .padding()
                 .background(Color(.systemGray6))
                 .cornerRadius(10)
                 .padding(.horizontal)
+                .accessibilityIdentifier(Idenitifiers.IncrementView.total.rawValue)
 
             Button(action: {
                 number += 1
@@ -30,6 +31,7 @@ struct IncrementView: View {
                     .foregroundColor(.white)
                     .cornerRadius(10)
                     .padding(.horizontal)
+                    .accessibilityIdentifier(Idenitifiers.IncrementView.increase.rawValue)
             }
             Button(action: {
                 number -= 1
@@ -42,6 +44,7 @@ struct IncrementView: View {
                     .foregroundColor(.white)
                     .cornerRadius(10)
                     .padding(.horizontal)
+                    .accessibilityIdentifier(Idenitifiers.IncrementView.decrease.rawValue)
             }
         }
         .padding()

@@ -10,7 +10,7 @@ import XCTest
 
 // MARK: - XCUIElement Extension
 
-@MainActor
+//@MainActor
 extension XCUIElement {
     
     /**

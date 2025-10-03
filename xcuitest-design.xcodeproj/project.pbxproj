@@ -29,9 +29,30 @@
 		15CE36BF2D9DDB05005709E4 /* xcuitest-designUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "xcuitest-designUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		15C82C9D2E8FE7C300A3EB1F /* Exceptions for "xcuitest-design" folder in "xcuitest-designUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Idenitifiers.swift,
+			);
+			target = 15CE36BE2D9DDB05005709E4 /* xcuitest-designUITests */;
+		};
+		15C82C9F2E8FE98800A3EB1F /* Exceptions for "xcuitest-design" folder in "xcuitest-designTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Idenitifiers.swift,
+			);
+			target = 15CE36B42D9DDB05005709E4 /* xcuitest-designTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		15CE36AA2D9DDB03005709E4 /* xcuitest-design */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				15C82C9F2E8FE98800A3EB1F /* Exceptions for "xcuitest-design" folder in "xcuitest-designTests" target */,
+				15C82C9D2E8FE7C300A3EB1F /* Exceptions for "xcuitest-design" folder in "xcuitest-designUITests" target */,
+			);
 			path = "xcuitest-design";
 			sourceTree = "<group>";
 		};

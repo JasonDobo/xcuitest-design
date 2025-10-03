@@ -16,6 +16,7 @@ struct ContentView: View {
                     .foregroundStyle(.tint)
 
                 Text("Hello world")
+                    .accessibilityIdentifier(Idenitifiers.FirstView.helloText.rawValue)
 
                 Button(action: {
                     print("Button was tapped!")
@@ -27,6 +28,7 @@ struct ContentView: View {
                         .background(Color.blue)
                         .foregroundColor(.white)
                         .cornerRadius(10)
+                        .accessibilityIdentifier(Idenitifiers.FirstView.tapMe.rawValue)
                 }
 
                 Spacer()
@@ -43,6 +45,7 @@ struct ContentView: View {
                             .foregroundColor(.white)
                             .cornerRadius(10)
                             .padding(.horizontal, 4)
+                            .accessibilityIdentifier(Idenitifiers.Navigation.incrementView.rawValue)
                     }
 
                     NavigationLink(destination: FetchJsonView()) {
@@ -53,6 +56,7 @@ struct ContentView: View {
                             .foregroundColor(.white)
                             .cornerRadius(10)
                             .padding(.horizontal, 4)
+                            .accessibilityIdentifier(Idenitifiers.Navigation.fetchView.rawValue)
                     }
                 }
             }

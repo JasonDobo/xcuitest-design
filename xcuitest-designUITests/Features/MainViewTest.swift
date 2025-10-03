@@ -7,27 +7,11 @@
 
 import XCTest
 
-final class MainViewTest: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+final class MainViewTest: BaseUITestCase {
 
     func testExample() throws {
-        // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
 
     func testLaunchPerformance() throws {
@@ -35,5 +19,44 @@ final class MainViewTest: XCTestCase {
         measure(metrics: [XCTApplicationLaunchMetric()]) {
             XCUIApplication().launch()
         }
+    }
+    
+    func testFetchScreen() {
+        let navigationSteps = NavigationSteps(app: app)
+        navigationSteps
+            .givenIAmOnFetchScreen()
+    }
+    
+    func testFetchScreenUpdate() {
+        let navigationSteps = NavigationSteps(app: app)
+        navigationSteps
+            .givenIAmOnFetchScreen()
+    }
+    
+    func testIncrement() {
+        let navigationSteps = NavigationSteps(app: app)
+        let incrementSteps = IncrementSteps(app: app)
+        navigationSteps
+            .givenIAmOnIncrementScreen()
+        
+        incrementSteps
+            .whenITapAdd()
+            .thenIShouldSee(total: "1")
+            .whenITapAdd()
+            .thenIShouldSee(total: "2")
+            .whenITapSubtract()
+            .thenIShouldSee(total: "1")
+    }
+    
+    func testCaculation() {
+        let navigationSteps = NavigationSteps(app: app)
+        let incrementSteps = IncrementSteps(app: app)
+        
+        navigationSteps
+            .givenIAmOnIncrementScreen()
+        
+        incrementSteps
+            .whenNumbersAreCauluated()
+            .thenIShouldSeeExpectedTotal()
     }
 }
