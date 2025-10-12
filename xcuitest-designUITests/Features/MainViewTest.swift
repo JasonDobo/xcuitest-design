@@ -21,6 +21,11 @@ final class MainViewTest: BaseUITestCase {
         }
     }
     
+    func testMainView() {
+        let navigationSteps = NavigationSteps(app: app)
+        navigationSteps.givenMainViewIsDisplayed()
+    }
+    
     func testFetchScreen() {
         let navigationSteps = NavigationSteps(app: app)
         navigationSteps
@@ -29,8 +34,11 @@ final class MainViewTest: BaseUITestCase {
     
     func testFetchScreenUpdate() {
         let navigationSteps = NavigationSteps(app: app)
+        let fetchSteps = FetchSteps(app: app)
         navigationSteps
             .givenIAmOnFetchScreen()
+        
+        fetchSteps.whenIShouldBeAbleToUpdate()        
     }
     
     func testIncrement() {

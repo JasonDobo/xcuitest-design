@@ -185,6 +185,35 @@ extension XCUIElement {
     func hasKeyboardFocus() -> Bool {
         (self.value(forKey: "hasKeyboardFocus") as? Bool) ?? false
     }
+    
+    /**
+     Performs a drag and drop gesture, moving the center of the current element to the center of the specified destination element.
+     - Parameters:
+        - destinationElement: The XCUIElement representing the drop target.
+        - duration: The duration (in seconds) the initial press should last before the drag starts. Default is 1.0 (recommended for drag gestures).
+     */
+    func dragToCenter(of destinationElement: XCUIElement, pressDuration duration: TimeInterval = 1.0) {
+        guard self.exists && self.isHittable else {
+            XCTFail("Source element '\(self.label)' is not hittable or does not exist.")
+            return
+        }
+        
+        guard destinationElement.exists && destinationElement.isHittable else {
+            XCTFail("Destination element '\(destinationElement.label)' is not hittable or does not exist.")
+            return
+        }
+        
+        // Define the starting coordinate (the center of the current element)
+        let startCoordinate = self.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        
+        // Define the destination coordinate (the center of the drop target)
+        let destinationCoordinate = destinationElement.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        
+        // press(forDuration:thenDragTo:) simulates a long press followed by dragging
+        startCoordinate.press(forDuration: duration, thenDragTo: destinationCoordinate)
+        
+        print("Successfully performed drag from '\(self.label)' to '\(destinationElement.label)' over \(duration) seconds.")
+    }
 }
 
 extension UInt32 {

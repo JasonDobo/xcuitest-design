@@ -62,7 +62,7 @@ struct ContentView: View {
             }
             .padding()
             .navigationTitle("First View")
-        }
+        }.accessibilityIdentifier("First View")
     }
 }
 

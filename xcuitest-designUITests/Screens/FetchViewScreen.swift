@@ -20,4 +20,8 @@ struct FetchViewScreen {
         
         return responseTitle.wait(for: .exists) && reloadButton.wait(for: .exists)
     }
+    
+    func reload() {
+        reloadButton.waitAndTap(for: .enabled)
+    }
 }

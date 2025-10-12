@@ -9,10 +9,16 @@ import XCTest
 
 struct NavigationSteps {
     let app: XCUIApplication
+    private var firstScreen: FirstViewScreen { FirstViewScreen(app: app) }
     private var incrementScreen: IncrementViewScreen { IncrementViewScreen(app: app) }
     private var fetchScreen: FetchViewScreen { FetchViewScreen(app: app) }
     private var navigationScreen: NavigationScreen { NavigationScreen(app: app) }
 
+    func givenMainViewIsDisplayed() {
+        XCTAssertTrue(firstScreen.isDisplayed(),   "Main view should be visible")
+        firstScreen.tapMe()
+    }
+    
     @discardableResult
     func givenIAmOnIncrementScreen() -> Self {
         if (navigationScreen.isDisplayed()) {

@@ -20,7 +20,7 @@ enum Idenitifiers {
 
     
     enum FirstView: String {
-        case titleText = "firstView.titleText"
+        case titleText = "First View"
         case helloText = "firstView.helloText"
         case tapMe = "firstView.tapMe"
 

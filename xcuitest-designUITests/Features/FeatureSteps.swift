@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import XCTest
 
-class FeatureSteps {
+class FeatureSteps: XCTest {
     
     func disableWaitForIdle() {
         guard let applicationProcess = objc_getClass("XCUIApplicationProcess") as? AnyClass else {
