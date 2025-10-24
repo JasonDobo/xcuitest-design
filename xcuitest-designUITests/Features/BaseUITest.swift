@@ -26,3 +26,19 @@ class BaseUITestCase: XCTestCase {
         super.tearDown()
     }
 }
+
+// Testable flag to access packages
+// other way to find elements through stae/type or property
+// placeholder value .. explore this
+
+//    steps.forEach { step in
+//        print(step)
+//    }
+//
+//    let names = steps.map { $0.name ?? "" }
+//    let thens = steps.filter { $0.type == .then }
+//
+//    let emailField = app.textFields.matching(NSPredicate(format: "placeholderValue == %@", "Email")).firstMatch
+//    let sliderAt50 = app.sliders.matching(NSPredicate(format: "value == '50%'")).firstMatch
+//
+//    
