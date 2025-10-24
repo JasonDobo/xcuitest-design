@@ -19,7 +19,8 @@ struct IncrementViewScreen {
     }
     
     @discardableResult
-    func isTotalEqual(to number: String) -> Self {
+    func isTotalEqual(to number: Int) -> Self {
+        let number = String(number)
         let current = numberField.value as! String
         let result = current.compare(number, options: .caseInsensitive) == .orderedSame
         

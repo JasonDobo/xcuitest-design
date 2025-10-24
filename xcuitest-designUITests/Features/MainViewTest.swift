@@ -49,11 +49,11 @@ final class MainViewTest: BaseUITestCase {
         
         incrementSteps
             .whenITapAdd()
-            .thenIShouldSee(total: "1")
+            .thenIShouldSee(total: 1)
             .whenITapAdd()
-            .thenIShouldSee(total: "2")
+            .thenIShouldSee(total: 2)
             .whenITapSubtract()
-            .thenIShouldSee(total: "1")
+            .thenIShouldSee(total: 1)
     }
     
     func testCaculation() {

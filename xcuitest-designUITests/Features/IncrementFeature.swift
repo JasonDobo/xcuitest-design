@@ -9,7 +9,57 @@ import XCTest
 
 class IncrementFeature: XCTestCase {
     
+    var app: XCUIApplication!
+    
     override func setUpWithError() throws {
         continueAfterFailure = false
+        
+        app = XCUIApplication()
+        app.launch()
+    }
+    
+    override func tearDown() {
+        app.terminate()
+        app = nil
+        super.tearDown()
+    }
+    
+    func testUserCanIncrementNumber() {
+        let navigationSteps = NavigationSteps(app: app)
+        let incrementSteps = IncrementSteps(app: app)
+        let presses = 5
+        
+        scenario("User can increment numbers") { step in
+            step.Given("I am on the increment screen") { navigationSteps.givenIAmOnIncrementScreen() }
+            step.When("I can increment numbers") { incrementSteps.incrementNumbers(total: presses) }
+            step.Then("the number is \(presses)") { incrementSteps.thenIShouldSee(total: presses) }
+        }
+    }
+    
+    func testUserCanDecrementNumber() {
+        let navigationSteps = NavigationSteps(app: app)
+        let incrementSteps = IncrementSteps(app: app)
+        let presses = -4
+        
+        scenario("User can increment numbers") { step in
+            step.Given("I am on the increment screen") { navigationSteps.givenIAmOnIncrementScreen() }
+            step.When("I can increment numbers") { incrementSteps.decrementNumbers(total: abs(presses) ) }
+            step.Then("the number is \(presses)") { incrementSteps.thenIShouldSee(total: presses) }
+        }
+    }
+    
+    func testUserCanIncrementAndDecrementNumber() {
+        let navigationSteps = NavigationSteps(app: app)
+        let incrementSteps = IncrementSteps(app: app)
+        let increment = 6
+        let decrement = -2
+        let total = increment + decrement
+        
+        scenario("User can increment and decrement numbers", failureMode: .stopOnFirst) { step in
+            step.Given("I am on the increment screen") { navigationSteps.givenIAmOnIncrementScreen() }
+            step.When("I can increment numbers") { incrementSteps.incrementNumbers(total: increment) }
+            step.And("I can decrement numbers") { incrementSteps.decrementNumbers(total: abs(decrement)) }
+            step.Then("the number is \(total)") { incrementSteps.thenIShouldSee(total: (total)) }
+        }
     }
 }

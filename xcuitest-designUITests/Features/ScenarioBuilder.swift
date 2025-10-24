@@ -77,44 +77,77 @@ public final class ScenarioBuilder {
         let start = Date()
         if let t = title, !t.isEmpty { logger("Scenario: \(t)") } else { logger("Scenario") }
         
+        var firstFailureIndex: Int? = nil
+        var firstError: Error? = nil
+        
         for (idx, step) in steps.enumerated() {
-            let label  = step.name.map { " \(step.type.rawValue.capitalized): \($0)" } ?? " \(step.type.rawValue.capitalized)"
-            logger(" \(label)")
+            let label = step.name.map { "\(step.type.rawValue.capitalized): \($0)" } ?? "\(step.type.rawValue.capitalized)"
+            logger(label)
             
             do {
-                try MainActor.assumeIsolated {
-                    try step.action()
+                if Thread.isMainThread {
+                    try MainActor.assumeIsolated {
+                        try step.action()
+                    }
+                } else {
+                    var thrownError: Error?
+                    DispatchQueue.main.sync {
+                        do {
+                            try MainActor.assumeIsolated {
+                                try step.action()
+                            }
+                        } catch {
+                            thrownError = error
+                        }
+                    }
+                    if let e = thrownError {
+                        throw e
+                    }
                 }
             } catch {
-                let duration = Date().timeIntervalSince(start)
-                logger("Failed at step #\(idx + 1): \(step.type.rawValue)\(step.name.map { " - \($0)" } ?? "")")
+                // Record the first failure if we haven't yet
+                if firstFailureIndex == nil {
+                    firstFailureIndex = idx
+                    firstError = error
+                }
+                
+                logger("Failed at step #\(idx + 1): \(step.type.rawValue.capitalized)\(step.name.map { ": \($0)" } ?? "")")
                 
                 if reportToXCTest {
                     // Show nicely in Xcode's Test Report
                     testCase.record(
                         XCTIssue(
                             type: .assertionFailure,
-                            compactDescription: "Scenario\(title.map { " \" \($0)\"" } ?? "") failed at step #\(idx + 1): \(step.type.rawValue)\(step.name.map { " - \($0)" } ?? "")",
+                            compactDescription: "Scenario\(title.map { " \"\($0)\"" } ?? "") failed at step #\(idx + 1): \(step.type.rawValue.capitalized)\(step.name.map { ": \($0)" } ?? "")",
                             detailedDescription: String(describing: error)
                         )
                     )
                 }
                 
-                let result = ScenarioResult(
-                    title: title,
-                    steps: steps,
-                    failedStepIndex: idx,
-                    error: error,
-                    duration: duration
-                )
-                
-                if failureMode == .stopOnFirst { return result } else { return result }
+                if failureMode == .stopOnFirst {
+                    let duration = Date().timeIntervalSince(start)
+                    return ScenarioResult(
+                        title: title,
+                        steps: steps,
+                        failedStepIndex: idx,
+                        error: error,
+                        duration: duration
+                    )
+                } else {
+                    // continueAll: keep going and collect further failures (we already recorded the first)
+                    continue
+                }
             }
         }
             
         let duration = Date().timeIntervalSince(start)
-        logger("Passed in \(String(format: "%.2f", duration * 1_000))ms")
-        return ScenarioResult(title: title, steps: steps, failedStepIndex: nil, error: nil, duration: duration)
+        if let firstIdx = firstFailureIndex {
+            logger("Failed (continueAll) — first failure at step #\(firstIdx + 1) in \(String(format: "%.2f", duration * 1_000))ms")
+        } else {
+            logger("Passed in \(String(format: "%.2f", duration * 1_000))ms")
+        }
+        
+        return ScenarioResult(title: title, steps: steps, failedStepIndex: firstFailureIndex, error: firstError, duration: duration)
     }
 }
 // MARK: - XCTestCase convenience
@@ -135,5 +168,6 @@ extension XCTestCase {
             reportToXCTest: reportToXCTest,
             logger: logger
         )
-    }    
+    }
 }
+
