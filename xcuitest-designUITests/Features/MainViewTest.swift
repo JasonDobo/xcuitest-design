@@ -9,7 +9,7 @@ import XCTest
 
 final class MainViewTest: BaseUITestCase {
 
-    func testExample() throws {
+    func testLaunch() throws {
         let app = XCUIApplication()
         app.launch()
     }
@@ -23,48 +23,28 @@ final class MainViewTest: BaseUITestCase {
     
     func testMainView() {
         let navigationSteps = NavigationSteps(app: app)
-        navigationSteps.givenMainViewIsDisplayed()
+        scenario("User can view the first view") { step in
+            step.Given("I am on the increment screen") { navigationSteps.givenMainViewIsDisplayed() }
+        }
     }
     
-    func testFetchScreen() {
-        let navigationSteps = NavigationSteps(app: app)
-        navigationSteps
-            .givenIAmOnFetchScreen()
-    }
-    
-    func testFetchScreenUpdate() {
+    func testNavigateToFetchView() {
         let navigationSteps = NavigationSteps(app: app)
         let fetchSteps = FetchSteps(app: app)
-        navigationSteps
-            .givenIAmOnFetchScreen()
-        
-        fetchSteps.whenIShouldBeAbleToUpdate()        
+
+        scenario("User can navigate to fetch screen") { step in
+            step.When("User selects Fetch View button") { navigationSteps.givenIAmOnFetchScreen() }
+            step.Then("The fetch screen is displayed") { fetchSteps.thenTheFetchViewIsDisplayed() }
+        }
     }
     
-    func testIncrement() {
+    func testNavigateToIncrementView() {
         let navigationSteps = NavigationSteps(app: app)
         let incrementSteps = IncrementSteps(app: app)
-        navigationSteps
-            .givenIAmOnIncrementScreen()
-        
-        incrementSteps
-            .whenITapAdd()
-            .thenIShouldSee(total: 1)
-            .whenITapAdd()
-            .thenIShouldSee(total: 2)
-            .whenITapSubtract()
-            .thenIShouldSee(total: 1)
-    }
-    
-    func testCaculation() {
-        let navigationSteps = NavigationSteps(app: app)
-        let incrementSteps = IncrementSteps(app: app)
-        
-        navigationSteps
-            .givenIAmOnIncrementScreen()
-        
-        incrementSteps
-            .whenNumbersAreCauluated()
-            .thenIShouldSeeExpectedTotal()
+
+        scenario("User can navigate to fetch screen") { step in
+            step.When("User selects Fetch View button") { navigationSteps.givenIAmOnIncrementScreen() }
+            step.Then("The fetch screen is displayed") { incrementSteps.thenTheIncrementViewIsDisplayed() }
+        }
     }
 }

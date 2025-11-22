@@ -13,6 +13,12 @@ struct FetchSteps {
     private var fetchViewScreen: FetchViewScreen { FetchViewScreen(app: app) }
 
     @discardableResult
+    func thenTheFetchViewIsDisplayed() -> Self {
+        XCTAssertTrue(fetchViewScreen.isDisplayed(), "Fetch View is not displayed")
+        return self
+    }
+    
+    @discardableResult
     func whenIShouldBeAbleToUpdate() -> Self {
         XCTAssertTrue(fetchViewScreen.isDisplayed(), "Fetch View is not displayed")
         fetchViewScreen.reload()

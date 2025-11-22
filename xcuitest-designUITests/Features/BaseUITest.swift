@@ -9,21 +9,28 @@ import Foundation
 import XCTest
 
 class BaseUITestCase: XCTestCase {
+    // Each test gets its own XCUIApplication instance: better isolation and less flakiness.
     var app: XCUIApplication!
 
-    override func setUp() {
-        super.setUp()
+    override func setUpWithError() throws {
+        try super.setUpWithError()
         continueAfterFailure = false
 
         app = XCUIApplication()
-        // app.launchArguments += ["-uiTesting"] Not needed yet, will use later
+        // common args/env:
+        // app.launchArguments += ["-UITestMode"]
+        // app.launchEnvironment["UITEST"] = "1"
+
+        // If you want a fresh state for every test:
         app.launch()
     }
 
-    override func tearDown() {
-        app.terminate()
+    override func tearDownWithError() throws {
+        if app.state != .notRunning {
+            app.terminate()
+        }
         app = nil
-        super.tearDown()
+        try super.tearDownWithError()
     }
 }
 

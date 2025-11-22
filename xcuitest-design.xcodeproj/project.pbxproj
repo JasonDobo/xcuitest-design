@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		15CD09482ED1D0D7006A86D0 /* Testing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15CD09472ED1D0D7006A86D0 /* Testing.framework */; platformFilter = ios; };
+		15CD09492ED1D0D7006A86D0 /* Testing.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 15CD09472ED1D0D7006A86D0 /* Testing.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		15CD09522ED1D520006A86D0 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = 15CD09512ED1D520006A86D0 /* ViewInspector */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		15CE36B62D9DDB05005709E4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -23,7 +29,22 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		15CD094A2ED1D0D7006A86D0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				15CD09492ED1D0D7006A86D0 /* Testing.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		15CD09472ED1D0D7006A86D0 /* Testing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Testing.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/Testing.framework; sourceTree = DEVELOPER_DIR; };
 		15CE36A82D9DDB03005709E4 /* xcuitest-design.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "xcuitest-design.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		15CE36B52D9DDB05005709E4 /* xcuitest-designTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "xcuitest-designTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		15CE36BF2D9DDB05005709E4 /* xcuitest-designUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "xcuitest-designUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,6 +101,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15CD09482ED1D0D7006A86D0 /* Testing.framework in Frameworks */,
+				15CD09522ED1D520006A86D0 /* ViewInspector in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,12 +116,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		15CD09462ED1D0D6006A86D0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				15CD09472ED1D0D7006A86D0 /* Testing.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		15CE369F2D9DDB03005709E4 = {
 			isa = PBXGroup;
 			children = (
 				15CE36AA2D9DDB03005709E4 /* xcuitest-design */,
 				15CE36B82D9DDB05005709E4 /* xcuitest-designTests */,
 				15CE36C22D9DDB05005709E4 /* xcuitest-designUITests */,
+				15CD09462ED1D0D6006A86D0 /* Frameworks */,
 				15CE36A92D9DDB03005709E4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -145,6 +177,7 @@
 				15CE36B12D9DDB05005709E4 /* Sources */,
 				15CE36B22D9DDB05005709E4 /* Frameworks */,
 				15CE36B32D9DDB05005709E4 /* Resources */,
+				15CD094A2ED1D0D7006A86D0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -156,6 +189,7 @@
 			);
 			name = "xcuitest-designTests";
 			packageProductDependencies = (
+				15CD09512ED1D520006A86D0 /* ViewInspector */,
 			);
 			productName = "xcuitest-designTests";
 			productReference = 15CE36B52D9DDB05005709E4 /* xcuitest-designTests.xctest */;
@@ -216,6 +250,9 @@
 			);
 			mainGroup = 15CE369F2D9DDB03005709E4;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				15CD09502ED1D520006A86D0 /* XCRemoteSwiftPackageReference "ViewInspector" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 15CE36A92D9DDB03005709E4 /* Products */;
 			projectDirPath = "";
@@ -571,6 +608,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		15CD09502ED1D520006A86D0 /* XCRemoteSwiftPackageReference "ViewInspector" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nalexn/ViewInspector";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		15CD09512ED1D520006A86D0 /* ViewInspector */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 15CD09502ED1D520006A86D0 /* XCRemoteSwiftPackageReference "ViewInspector" */;
+			productName = ViewInspector;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 15CE36A02D9DDB03005709E4 /* Project object */;
 }

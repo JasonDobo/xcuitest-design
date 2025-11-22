@@ -13,6 +13,12 @@ struct IncrementSteps {
     static var expectedResult: Int = 0
 
     @discardableResult
+    func thenTheIncrementViewIsDisplayed() -> Self {
+        XCTAssertTrue(incrementScreen.isDisplayed(), "Increment View is not displayed")
+        return self
+    }
+    
+    @discardableResult
     func whenNumbersAreCauluated() -> Self {
         let randomAdd = Int.random(in: 0..<6)
         for _ in 0..<randomAdd {

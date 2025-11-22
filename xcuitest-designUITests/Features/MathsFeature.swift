@@ -7,22 +7,7 @@
 
 import XCTest
 
-class IncrementFeature: XCTestCase {
-    
-    var app: XCUIApplication!
-    
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-        
-        app = XCUIApplication()
-        app.launch()
-    }
-    
-    override func tearDown() {
-        app.terminate()
-        app = nil
-        super.tearDown()
-    }
+class MathsFeature: BaseUITestCase {
     
     func testUserCanIncrementNumber() {
         let navigationSteps = NavigationSteps(app: app)
@@ -41,7 +26,7 @@ class IncrementFeature: XCTestCase {
         let incrementSteps = IncrementSteps(app: app)
         let presses = -4
         
-        scenario("User can increment numbers") { step in
+        scenario("User can decrement numbers") { step in
             step.Given("I am on the increment screen") { navigationSteps.givenIAmOnIncrementScreen() }
             step.When("I can increment numbers") { incrementSteps.decrementNumbers(total: abs(presses) ) }
             step.Then("the number is \(presses)") { incrementSteps.thenIShouldSee(total: presses) }
